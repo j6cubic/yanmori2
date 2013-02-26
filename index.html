@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<head>
+	<meta charset="utf-8">
+	<title>Yanmori 2</title>
+	<script type="text/javascript" src="base64.js"></script>
+	<script type="text/javascript" src="jquery.js"></script>
+	<script type="text/javascript" src="ini.js"></script>
+	<script type="text/javascript" src="functions.js"></script>
+	<link href='http://fonts.googleapis.com/css?family=Play:400,700' rel='stylesheet' type='text/css'>
+	<style type="text/css">
+		@font-face
+		{
+	        font-family: 'IcoMoon';
+	        src:url('fonts/IcoMoon.eot');
+	        src:url('fonts/IcoMoon.eot?#iefix') format('embedded-opentype'),
+	            url('fonts/IcoMoon.woff') format('woff'),
+                url('fonts/IcoMoon.ttf') format('truetype'),
+                url('fonts/IcoMoon.svg#IcoMoon') format('svg');
+	        font-weight: normal;
+	        font-style: normal;
+		}
+
+		*
+		{
+			-webkit-box-sizing: border-box;
+			-moz-box-sizing: border-box;
+			box-sizing: border-box;
+		}
+
+		body
+		{
+			font-size: 16px;
+			background-color: #269;
+			font-family: Play, sans-serif;
+		}
+
+		.stage
+		{
+			position: absolute;
+			top: 0;
+			left: 12em;
+			right: 0;
+			bottom: 0;
+
+			background-image: -webkit-linear-gradient(white 2px, transparent 2px),
+			                  -webkit-linear-gradient(0deg, white 2px, transparent 2px),
+			                  -webkit-linear-gradient(rgba(255,255,255,.3) 1px, transparent 1px),
+			                  -webkit-linear-gradient(0deg, rgba(255,255,255,.3) 1px, transparent 1px);
+			background-image: linear-gradient(white 2px, transparent 2px),
+			                  linear-gradient(90deg, white 2px, transparent 2px),
+			                  linear-gradient(rgba(255,255,255,.3) 1px, transparent 1px),
+			                  linear-gradient(90deg, rgba(255,255,255,.3) 1px, transparent 1px);
+			background-size:8em 8em, 8em 8em, 1em 1em, 1em 1em;
+			background-position:-2px -2px, -2px -2px, -1px -1px, -1px -1px
+		}
+
+		.info
+		{
+			background-color: #369;
+			position: fixed;
+			top: 0;
+			left: 0;
+			bottom: 0;
+			width: 6em;
+			font-size: 200%;
+			color: #0bf;
+			z-index: 2;
+			border-right: 2px solid white;
+		}
+
+		.button
+		{
+			font-family: IcoMoon, Play, sans-serif;
+			display: inline-block;
+			width: 25%;
+			cursor: pointer;
+			text-align: center;
+			font-size: 75%;
+			height: 1.5em;
+			line-height: 1.25em;
+			float: left;
+			color: #034;
+		}
+
+		.button:hover
+		{
+			color: #0bf;
+		}
+
+		.text
+		{
+			display: block;
+			background: rgba(0, 0, 0, 0.5);
+			
+			position: absolute;
+			top: 1em;
+			right: 0;
+			bottom: 0;
+			left: 0;
+
+			padding: 0.25em 0 0 0.25em;
+		}
+
+		h1
+		{
+			font-size: 100%;
+			margin: 0;
+			font-weight: normal;
+		}
+
+		table
+		{
+			font-size: 50%;
+			margin-bottom: 2em;
+		}
+
+		th, td
+		{
+			vertical-align: top;
+		}
+
+		th
+		{
+			text-align: left;
+			font-weight: 700;
+		}
+
+		.offset
+		{
+			display: inline-block;
+			background: rgba(0, 0, 0, 0.75);
+			height: 1em;
+			width: 20%;
+			vertical-align: top;
+		}
+
+		.block
+		{
+			position: absolute;
+			display: block;
+			width: 1em;
+			height: 1em;
+			background: #000;
+			border: 1px solid black;
+
+			margin: -1px 0 0 -1px;
+
+		}
+		.block::before
+		{
+			font-family: IcoMoon, Play, sans-serif;
+			font-size: 80%;
+			line-height: 1em;
+			position: absolute;
+		}
+
+		.center::after
+		{
+			display: block;
+			content: "";
+			background: white;
+			width: 10px;
+			height: 10px;
+			position: absolute;
+			left: 4px;
+			top: 4px;
+			border: 1px solid black;
+		}
+
+		.name-0
+		{
+			background: transparent;
+			border: none;
+		}
+
+		.name-0::before
+		{
+			color: #369;
+			content: "X";
+			font-size: 90%;
+			top: 0.05em;
+			left: 0;
+		}
+
+		.name-144
+		{
+			background: hsl(0, 50%, 50%);
+		}
+
+		.name-210
+		{
+			background: hsl(60, 50%, 50%);
+		}
+
+		.name-732
+		{
+			background: hsl(120, 50%, 50%);
+		}
+		.name-732::before
+		{
+			content: ">";
+			display: block;
+			width: 0;
+			height: 0;
+			color: hsl(120, 50%, 25%);
+			left: 0.075em;
+			bottom: 1px;
+
+			-webkit-transform: rotate(-90deg);
+			-ms-transform: rotate(-90deg);
+			transform: rotate(-90deg);
+		}
+
+		.name-733
+		{
+			background: hsl(180, 50%, 50%);
+		}
+		.name-733::before
+		{
+			content: ">";
+			display: block;
+			width: 0;
+			height: 0;
+			color: hsl(180, 50%, 25%);
+			left: 1px;
+			top: 0.075em;
+		}
+
+		.name-734
+		{
+			background: hsl(240, 50%, 55%);
+		}
+		.name-734::before
+		{
+			content: ">";
+			display: block;
+			width: 0;
+			height: 0;
+			color: hsl(240, 50%, 27.5%);
+			right: 0.075em;
+			top: 1px;
+
+			-webkit-transform: rotate(90deg);
+			-ms-transform: rotate(90deg);
+			transform: rotate(90deg);
+		}
+
+		.name-735
+		{
+			background: hsl(300, 25%, 75%);
+		}
+		.name-735::before
+		{
+			content: ">";
+			display: block;
+			width: 0;
+			height: 0;
+			color: hsl(300, 25%, 40%);
+			position: absolute;
+			right: 1px;
+			bottom: 0.075em;
+
+			-webkit-transform: rotate(180deg);
+			-ms-transform: rotate(180deg);
+			transform: rotate(180deg);
+		}
+
+		.ghost
+		{
+			opacity: 0.5;
+		}
+
+		.palette .block
+		{
+			position: relative;
+			width: 1em;
+			height: 1em;
+			margin: 2px;
+			font-size: 65%;
+		}
+
+		.palette .active
+		{
+			outline: 2px solid #0bf;
+		}
+
+		.paletteBlockType
+		{
+			clear: both;
+			width: 100%;
+			font-size: 50%;
+			padding-top: 0.25em;
+		}
+	</style>
+</head>
+<body>
+	<div class="info">
+		<div class="button load" title="load">L</div>
+		<div class="button save" title="save">S</div>
+		<div class="button level" data-level="0" title="Level B1">0</div>
+		<div class="button level" data-level="2" title="Level B2">2</div>
+		<div class="text">
+			<h1 class="basicInfo">Fuselage</h1>
+			<table class="basicInfo">
+				<tr>
+					<th scope="col">Level</th>
+					<td class="levelDisplay"></td>
+				</tr>
+				<tr>
+					<th scope="col">Blocks</th>
+					<td class="blockCount">&nbsp;<br>&nbsp;</td>
+				</tr>
+			</table>
+			<h1 class="blockInfo">Block</h1>
+			<table class="blockInfo">
+				<tr>
+					<th scope="col">ID</th>
+					<td class="blockID"></td>
+				</tr>
+				<tr>
+					<th scope="col">type</th>
+					<td class="blockType"></td>
+				</tr>
+				<tr>
+					<th scope="col">x</th>
+					<td class="blockX"></td>
+				</tr>
+				<tr>
+					<th scope="col">y</th>
+					<td class="blockY"></td>
+				</tr>
+			</table>
+			<h1 class="palette">Palette</h1>
+			<div class="palette">
+				<div class="button block name-144 active" data-type="144"></div>
+				<div class="button block name-210" data-type="210"></div>
+				<div class="button block name-732" data-type="732"></div>
+				<div class="button block name-733" data-type="733"></div>
+				<div class="button block name-734" data-type="734"></div>
+				<div class="button block name-735" data-type="735"></div>
+				<div class="button block name-0" data-type="0"></div>
+				<div class="paletteBlockType"></div>
+			</div>
+		</div>
+	</div>
+	<div class="stage"></div>
+<!--
+	Compatibility:
+		Firefox			4  (window.URL.createObjectURL)
+		Chrome			8 (window.URL.createObjectURL)
+		IE				10  (File API)
+		Opera			12.02 (File API)
+		Safari			6.0.2 (File API)
+
+		Firefox Mobile	? (File API)
+		Android			unsupported/4.0 (window.URL.createObjectURL)
+		IE Mobile		? (File API)
+		Opera Mobile	? (File API)
+		Safari Mobile	6.0 (File API)
+-->
+</body>
